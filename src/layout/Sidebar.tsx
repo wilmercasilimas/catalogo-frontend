@@ -41,6 +41,7 @@ export default function Sidebar({ cerrar }: Props) {
           <NavLink
             key={to}
             to={to}
+            onClick={cerrar} // ✅ esto hace que se cierre el menú móvil
             className={({ isActive }) =>
               `flex items-center gap-2 px-3 py-2 text-sm font-semibold uppercase tracking-wide ${
                 isActive

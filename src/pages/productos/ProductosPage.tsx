@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import ProductoTable from "@/pages/productos/components/ProductoTable";
 import CrearProductoModal from "@/pages/productos/components/CrearProductoModal";
 import EditarProductoModal from "@/pages/productos/components/EditarProductoModal";
+import BuscadorProductos from "@/pages/productos/components/BuscadorProductos";
 
 import type { Producto } from "@/types/producto";
 import { Plus } from "lucide-react";
@@ -18,6 +19,7 @@ type ProductoAPI = Omit<Producto, "imagen"> & {
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -27,11 +29,10 @@ export default function ProductosPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/productos?estado=all`, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
-
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const productosNormalizados: Producto[] = (res.data as ProductoAPI[]).map(
         (p) => ({
@@ -44,6 +45,7 @@ export default function ProductosPage() {
       );
 
       setProductos(productosNormalizados);
+      setProductosFiltrados(productosNormalizados);
     } catch {
       setError("No se pudieron cargar los productos");
     } finally {
@@ -54,6 +56,22 @@ export default function ProductosPage() {
   useEffect(() => {
     cargarProductos();
   }, []);
+
+  const handleBuscar = useCallback((termino: string) => {
+    if (!termino.trim()) {
+      setProductosFiltrados(productos);
+      return;
+    }
+
+    const term = termino.toLowerCase();
+    const filtrados = productos.filter(
+      (p) =>
+        p.nombre.toLowerCase().includes(term) ||
+        p.categoria.toLowerCase().includes(term)
+    );
+
+    setProductosFiltrados(filtrados);
+  }, [productos]);
 
   return (
     <div className={`${sectionBase} ${dashboardSection}`}>
@@ -73,6 +91,10 @@ export default function ProductosPage() {
         </button>
       </div>
 
+      <div className="my-4">
+        <BuscadorProductos onBuscar={handleBuscar} />
+      </div>
+
       <div className="mt-6">
         {loading ? (
           <p className="text-gray-600 text-sm">Cargando productos...</p>
@@ -80,7 +102,7 @@ export default function ProductosPage() {
           <p className="text-red-600 text-sm">{error}</p>
         ) : (
           <ProductoTable
-            productos={productos}
+            productos={productosFiltrados}
             onEditar={(producto) => setProductoAEditar(producto)}
           />
         )}

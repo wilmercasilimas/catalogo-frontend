@@ -116,7 +116,7 @@ export default function CrearProductoModal({
                 </label>
                 <input
                   {...register("nombre")}
-                  placeholder="Ej: Anillo de presión"
+                  placeholder="Ej:  Codo de hierro galvanizado"
                   className={textInput}
                 />
                 {errors.nombre && (
@@ -131,7 +131,7 @@ export default function CrearProductoModal({
                 </label>
                 <input
                   {...register("categoria")}
-                  placeholder="Ej: Hierro galvanizado"
+                  placeholder="Ej: Conexiones, Accesorios, etc."
                   className={textInput}
                 />
                 {errors.categoria && (
@@ -157,7 +157,7 @@ export default function CrearProductoModal({
                 </label>
                 <textarea
                   {...register("descripcion")}
-                  placeholder="Ej: Codos para tuberías de alta presión"
+                  placeholder='Ej: "Codo metálico de 90° o 45°, roscado, ideal para desviar el flujo en instalaciones de agua, gas o aire a presión."'
                   className={textareaInput}
                   rows={3}
                 ></textarea>

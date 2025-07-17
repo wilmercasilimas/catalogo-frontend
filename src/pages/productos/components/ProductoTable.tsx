@@ -118,7 +118,9 @@ export default function ProductoTable({ productos, onEditar }: Props) {
                 <td className={tableCell + " font-medium"}>
                   {producto.nombre}
                 </td>
-                <td className={tableCell}>{producto.categoria}</td>
+                <td className={tableCell}>
+                  <span translate="no">{producto.categoria}</span>
+                </td>
                 <td className={tableCell}>{producto.tipo}</td>
                 <td className={tdVariantes}>
                   {producto.variantes?.length > 0 ? (
@@ -175,7 +177,10 @@ export default function ProductoTable({ productos, onEditar }: Props) {
               )}
               <div>
                 <p className="font-semibold text-gray-800">{producto.nombre}</p>
-                <p className="text-xs text-gray-500">{producto.categoria}</p>
+                <p className="text-xs text-gray-500" translate="no">
+                  {producto.categoria}
+                </p>
+
                 <p className="text-xs text-gray-500">{producto.tipo}</p>
               </div>
             </div>
