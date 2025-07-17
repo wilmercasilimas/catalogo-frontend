@@ -1,5 +1,5 @@
 export interface Variante {
-  modelo: string;     // ✅ importante: requerido por Mongoose y usado en el frontend
+  modelo: string; // ✅ importante: requerido por Mongoose y usado en el frontend
   nombre: string;
   precio: number;
   stock: number;
@@ -13,10 +13,10 @@ export interface Producto {
   tipo: string;
   estado: boolean;
   imagen: {
-    secure_url: string;     // ✅ este campo es el único devuelto desde el backend
+    secure_url: string; // ✅ este campo es el único devuelto desde el backend
     public_id: string;
   };
   variantes: Variante[];
-  creadoEn?: string;
-  actualizadoEn?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

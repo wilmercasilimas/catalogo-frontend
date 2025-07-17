@@ -26,11 +26,12 @@ export default function ProductosPage() {
   const cargarProductos = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/productos`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/productos?estado=all`, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
 
       const productosNormalizados: Producto[] = (res.data as ProductoAPI[]).map(
         (p) => ({

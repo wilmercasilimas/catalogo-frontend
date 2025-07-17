@@ -1,6 +1,13 @@
 import type { Producto } from "@/types/producto";
 import Acciones from "./Acciones";
 import { Eye } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+
+import VerProductoModal from "./VerProductoModal";
+import ConfirmarEliminarModal from "@/components/ui/ConfirmarModal";
+// ✅ nuevo modal
+import axios from "@/lib/axiosInstance";
 import {
   tableBase,
   tableHeader,
@@ -21,20 +28,65 @@ interface Props {
 }
 
 export default function ProductoTable({ productos, onEditar }: Props) {
-  const handleEliminar = (id: string) => {
-    alert(`Eliminar producto ${id} (lógica aún no implementada)`);
+  const [productoDetalle, setProductoDetalle] = useState<Producto | null>(null);
+  const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
+  const [idAEliminar, setIdAEliminar] = useState<string | null>(null);
+
+  const confirmarEliminar = (id: string) => {
+    setIdAEliminar(id);
+    setMostrarConfirmar(true);
   };
 
-  const handleToggleEstado = (id: string) => {
-    alert(`Activar/Desactivar producto ${id} (lógica aún no implementada)`);
+  const handleEliminar = async () => {
+    if (!idAEliminar) return;
+    try {
+      await axios.delete(`/productos/${idAEliminar}`);
+      toast.success("Producto eliminado correctamente");
+      window.location.reload();
+    } catch {
+      toast.error("Error al eliminar el producto");
+    } finally {
+      setMostrarConfirmar(false);
+    }
   };
 
-  const handleVerDetalle = (id: string) => {
-    alert(`Ver detalles de producto ${id} (lógica aún no implementada)`);
+  const handleToggleEstado = async (id: string) => {
+    try {
+      const producto = productos.find((p) => p._id === id);
+      if (!producto) return;
+
+      await axios.patch(`/productos/${id}/estado`, {
+        estado: !producto.estado,
+      });
+
+      toast.success("Estado actualizado correctamente");
+      window.location.reload();
+    } catch {
+      toast.error("Error al cambiar el estado del producto.");
+    }
   };
+
+  const handleVerDetalle = (producto: Producto) => {
+    setProductoDetalle(producto);
+  };
+
+  const cerrarModalDetalle = () => setProductoDetalle(null);
 
   return (
     <div className="space-y-4">
+      <VerProductoModal
+        abierto={!!productoDetalle}
+        cerrar={cerrarModalDetalle}
+        producto={productoDetalle!}
+      />
+
+      <ConfirmarEliminarModal
+        abierto={mostrarConfirmar}
+        mensaje="¿Estás seguro de eliminar este producto?"
+        onConfirmar={handleEliminar}
+        onCancelar={() => setMostrarConfirmar(false)}
+      />
+
       {/* Versión tabla para pantallas grandes */}
       <div className="hidden md:block overflow-x-auto">
         <table className={tableBase}>
@@ -63,7 +115,9 @@ export default function ProductoTable({ productos, onEditar }: Props) {
                     <span className={tdSinValor}>Sin imagen</span>
                   )}
                 </td>
-                <td className={tableCell + " font-medium"}>{producto.nombre}</td>
+                <td className={tableCell + " font-medium"}>
+                  {producto.nombre}
+                </td>
                 <td className={tableCell}>{producto.categoria}</td>
                 <td className={tableCell}>{producto.tipo}</td>
                 <td className={tdVariantes}>
@@ -78,18 +132,18 @@ export default function ProductoTable({ productos, onEditar }: Props) {
                   )}
                 </td>
                 <td className={tableCell}>
-                  {producto.estado ? "Activo" : "Inactivo"}
+                  {producto.estado ? "Disponible" : "No disponible"}
                 </td>
                 <td className={tableCell}>
                   <Acciones
                     id={producto._id}
                     estado={producto.estado}
-                    onEliminar={handleEliminar}
+                    onEliminar={confirmarEliminar}
                     onToggleEstado={handleToggleEstado}
-                    onEditar={() => onEditar(producto)} // integración aquí
+                    onEditar={() => onEditar(producto)}
                   />
                   <button
-                    onClick={() => handleVerDetalle(producto._id)}
+                    onClick={() => handleVerDetalle(producto)}
                     className={verDetallesBtn}
                   >
                     <Eye className="w-4 h-4" />
@@ -105,7 +159,10 @@ export default function ProductoTable({ productos, onEditar }: Props) {
       {/* Versión móvil tipo "card" */}
       <div className="md:hidden space-y-4">
         {productos.map((producto) => (
-          <div key={producto._id} className="bg-white shadow rounded p-4 space-y-2">
+          <div
+            key={producto._id}
+            className="bg-white shadow rounded p-4 space-y-2"
+          >
             <div className="flex items-center gap-4">
               {producto.imagen?.secure_url ? (
                 <img
@@ -133,7 +190,9 @@ export default function ProductoTable({ productos, onEditar }: Props) {
                     </span>
                   ))
                 ) : (
-                  <span className="text-gray-400 italic text-xs">Sin variantes</span>
+                  <span className="text-gray-400 italic text-xs">
+                    Sin variantes
+                  </span>
                 )}
               </div>
             </div>
@@ -141,7 +200,7 @@ export default function ProductoTable({ productos, onEditar }: Props) {
             <p className="text-xs">
               Estado:{" "}
               <span className="font-medium">
-                {producto.estado ? "Activo" : "Inactivo"}
+                {producto.estado ? "disponible" : "No disponible"}
               </span>
             </p>
 
@@ -149,12 +208,12 @@ export default function ProductoTable({ productos, onEditar }: Props) {
               <Acciones
                 id={producto._id}
                 estado={producto.estado}
-                onEliminar={handleEliminar}
+                onEliminar={confirmarEliminar}
                 onToggleEstado={handleToggleEstado}
-                onEditar={() => onEditar(producto)} // también aquí
+                onEditar={() => onEditar(producto)}
               />
               <button
-                onClick={() => handleVerDetalle(producto._id)}
+                onClick={() => handleVerDetalle(producto)}
                 className={verDetallesBtn}
               >
                 <Eye className="w-4 h-4" />

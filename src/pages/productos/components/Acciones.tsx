@@ -1,6 +1,5 @@
 import { Pencil, Trash2, CircleCheck, CircleX } from "lucide-react";
 
-
 interface Props {
   id: string;
   estado: boolean;
@@ -9,7 +8,13 @@ interface Props {
   onEditar: () => void;
 }
 
-export default function Acciones({ id, estado, onEliminar, onToggleEstado, onEditar }: Props) {
+export default function Acciones({
+  id,
+  estado,
+  onEliminar,
+  onToggleEstado,
+  onEditar,
+}: Props) {
   return (
     <div className="flex gap-2">
       <button
@@ -21,8 +26,10 @@ export default function Acciones({ id, estado, onEliminar, onToggleEstado, onEdi
       </button>
 
       <button
-        title={estado ? "Desactivar" : "Activar"}
-        className={`text-sm ${estado ? "text-yellow-600" : "text-green-600"} hover:opacity-80`}
+        title={estado ? "Marcar como no disponible" : "Marcar como disponible"}
+        className={`text-sm ${
+          estado ? "text-yellow-600" : "text-green-600"
+        } hover:opacity-80`}
         onClick={() => onToggleEstado(id)}
       >
         {estado ? <CircleX size={18} /> : <CircleCheck size={18} />}
@@ -31,11 +38,7 @@ export default function Acciones({ id, estado, onEliminar, onToggleEstado, onEdi
       <button
         title="Eliminar"
         className="text-red-600 hover:text-red-800 transition"
-        onClick={() => {
-          if (confirm("¿Eliminar producto?")) {
-            onEliminar(id);
-          }
-        }}
+        onClick={() => onEliminar(id)}
       >
         <Trash2 size={18} />
       </button>
