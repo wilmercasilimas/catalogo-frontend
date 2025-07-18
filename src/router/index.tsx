@@ -4,6 +4,9 @@ import LoginPage from "@/pages/login/LoginPage";
 import AdminLayout from "@/layout/AdminLayout";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import ProductosPage from "@/pages/productos/ProductosPage";
+import PedidosPage from "@/pages/pedidos/PedidosPage";
+
+
 
 export function AppRouter() {
   return (
@@ -16,6 +19,8 @@ export function AppRouter() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<DashboardPage />} />
          <Route path="productos" element={<ProductosPage />} />
+         <Route path="pedidos" element={<PedidosPage />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

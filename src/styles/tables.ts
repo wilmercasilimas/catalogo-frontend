@@ -32,3 +32,20 @@ export const badgeModelo =
   "border rounded px-2 py-1 bg-gray-50 text-gray-700 text-xs";
 export const verDetallesBtn =
   "flex items-center gap-1 text-blue-600 hover:underline text-xs mt-2";
+
+// badge de estado para pedidos
+export function badgeEstado(estado: string) {
+  const base = "text-xs px-2 py-1 rounded font-semibold";
+  switch (estado) {
+    case "pendiente":
+      return `${base} bg-yellow-100 text-yellow-800`;
+    case "procesado":
+      return `${base} bg-blue-100 text-blue-800`;
+    case "cancelado":
+      return `${base} bg-red-100 text-red-800`;
+    default:
+      return `${base} bg-gray-200 text-gray-700`;
+  }
+}
+
+
