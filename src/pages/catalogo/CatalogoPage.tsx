@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "@/lib/axiosInstance";
 import AgregarProductoModal from "./components/AgregarProductoModal";
 import CarritoDrawer from "./components/CarritoDrawer";
+import FormularioClienteModal from "./components/FormularioClienteModal";
 import { useCarritoStore } from "@/store/useCarritoStore";
 
 interface Variante {
@@ -27,6 +28,7 @@ export default function CatalogoPage() {
   const [cargando, setCargando] = useState(true);
   const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
+  const [mostrarFormularioCliente, setMostrarFormularioCliente] = useState(false); // ✅
 
   const items = useCarritoStore((state) => state.items);
 
@@ -81,20 +83,32 @@ export default function CatalogoPage() {
       />
 
       {mostrarCarrito && (
-        <CarritoDrawer onClose={() => setMostrarCarrito(false)} />
+        <CarritoDrawer
+          onClose={() => setMostrarCarrito(false)}
+          onFinalizar={() => {
+            setMostrarCarrito(false);
+            setMostrarFormularioCliente(true);
+          }}
+        />
+      )}
+
+      {mostrarFormularioCliente && (
+        <FormularioClienteModal
+          abierto={mostrarFormularioCliente}
+          cerrar={() => setMostrarFormularioCliente(false)}
+        />
       )}
 
       <button
-  onClick={() => setMostrarCarrito(true)}
-  className="fixed bottom-4 right-4 z-50 bg-rojo text-white rounded-full p-4 shadow-lg hover:bg-red-700 transition"
-  aria-label="Ver carrito"
->
-  🛒
-  {items.length > 0 && (
-    <span className="ml-2 font-bold text-sm text-black">{items.length}</span>
-  )}
-</button>
-
+        onClick={() => setMostrarCarrito(true)}
+        className="fixed bottom-4 right-4 z-50 bg-rojo text-white rounded-full p-4 shadow-lg hover:bg-red-700 transition"
+        aria-label="Ver carrito"
+      >
+        🛒
+        {items.length > 0 && (
+          <span className="ml-2 font-bold text-sm text-black">{items.length}</span>
+        )}
+      </button>
     </div>
   );
 }

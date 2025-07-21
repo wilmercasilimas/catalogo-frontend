@@ -26,7 +26,7 @@ interface CarritoStore {
   items: ItemPedido[];
   agregarItem: (item: ItemPedido) => void;
   eliminarItem: (index: number) => void;
-  vaciarCarrito: () => void;
+  limpiar: () => void;
 }
 
 export const useCarritoStore = create<CarritoStore>((set) => ({
@@ -39,5 +39,5 @@ export const useCarritoStore = create<CarritoStore>((set) => ({
     set((state) => ({
       items: state.items.filter((_, i) => i !== index),
     })),
-  vaciarCarrito: () => set({ items: [] }),
+  limpiar: () => set({ items: [] }),
 }));
