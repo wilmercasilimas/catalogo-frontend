@@ -6,6 +6,7 @@ import DashboardPage from "@/pages/admin/DashboardPage";
 import ProductosPage from "@/pages/productos/ProductosPage";
 import PedidosPage from "@/pages/pedidos/PedidosPage";
 import UsuariosPage from "@/pages/usuarios/UsuariosPage";
+import CatalogoPage from "@/pages/catalogo/CatalogoPage";
 
 
 export function AppRouter() {
@@ -14,6 +15,7 @@ export function AppRouter() {
       <Routes>
         <Route path="/" element={<BienvenidaPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/catalogo" element={<CatalogoPage />} />
 
         {/* Rutas protegidas de admin */}
         <Route path="/admin" element={<AdminLayout />}>
