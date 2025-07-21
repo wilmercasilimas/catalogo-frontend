@@ -5,7 +5,7 @@ import AdminLayout from "@/layout/AdminLayout";
 import DashboardPage from "@/pages/admin/DashboardPage";
 import ProductosPage from "@/pages/productos/ProductosPage";
 import PedidosPage from "@/pages/pedidos/PedidosPage";
-
+import UsuariosPage from "@/pages/usuarios/UsuariosPage";
 
 
 export function AppRouter() {
@@ -20,6 +20,7 @@ export function AppRouter() {
           <Route index element={<DashboardPage />} />
          <Route path="productos" element={<ProductosPage />} />
          <Route path="pedidos" element={<PedidosPage />} />
+         <Route path="usuarios" element={<UsuariosPage />} />
 
         </Route>
       </Routes>
