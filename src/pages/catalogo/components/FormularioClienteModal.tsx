@@ -15,24 +15,21 @@ export default function FormularioClienteModal({ abierto, cerrar }: Props) {
   const [telefono, setTelefono] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [mensajeEnviado, setMensajeEnviado] = useState("");
+  const [codigoPedido, setCodigoPedido] = useState("");
+  const [resumenPedido, setResumenPedido] = useState<typeof items>([]);
 
   const items = useCarritoStore((state) => state.items);
   const limpiarCarrito = useCarritoStore((state) => state.limpiar);
 
   if (!abierto) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!nombre || !correo || !telefono || !empresa || items.length === 0) return;
 
     try {
-      const { data } = await axios.post("/pedidos", {
-        cliente: {
-          nombre,
-          email: correo,
-          telefono,
-          empresa,
-        },
+      const response = await axios.post("/pedidos", {
+        cliente: { nombre, email: correo, telefono, empresa },
         items: items.map((item) => ({
           producto: item.producto._id,
           variante: item.variante,
@@ -40,7 +37,21 @@ export default function FormularioClienteModal({ abierto, cerrar }: Props) {
         })),
       });
 
-      setMensajeEnviado(`Gracias, ${nombre}. Tu pedido fue recibido con el código ${data.codigo}. Te escribiremos a ${correo} en breve.`);
+      if (
+        response &&
+        typeof response.data === "object" &&
+        "codigo" in response.data &&
+        typeof response.data.codigo === "string"
+      ) {
+        setCodigoPedido(response.data.codigo);
+        setResumenPedido([...items]); // ✅ guardar antes de limpiar
+        setMensajeEnviado(
+          `Gracias, ${nombre}. Tu pedido fue recibido con el código ${response.data.codigo}. Te escribiremos a ${correo} en breve.`
+        );
+      } else {
+        setMensajeEnviado("Pedido enviado pero no se recibió un código de confirmación.");
+      }
+
       limpiarCarrito();
       setNombre("");
       setCorreo("");
@@ -63,8 +74,34 @@ export default function FormularioClienteModal({ abierto, cerrar }: Props) {
         </button>
 
         {mensajeEnviado ? (
-          <div className="text-green-700 font-semibold text-center py-10 space-y-4">
+          <div className="text-green-700 font-semibold text-center py-6 space-y-4">
             <p>{mensajeEnviado}</p>
+
+            {resumenPedido.length > 0 && (
+              <div className="bg-green-50 border border-green-200 rounded p-4 text-left text-sm text-green-900">
+                <p className="font-semibold mb-2">Resumen del pedido:</p>
+                <ul className="space-y-2">
+                  {resumenPedido.map((item, index) => (
+                    <li key={index} className="border-b pb-1">
+                      <p className="font-medium">
+                        {item.producto.nombre || "Producto sin nombre"}
+                      </p>
+                      <p className="text-gray-700">
+                        Variante: <strong>{item.variante.modelo || "Sin modelo"}</strong>
+                        {" · "}Cantidad: <strong>{item.cantidad}</strong>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {codigoPedido && (
+              <p className="text-sm text-gray-700">
+                Guarda este código: <strong>{codigoPedido}</strong>
+              </p>
+            )}
+
             <button onClick={cerrar} className={primaryButton}>
               Cerrar
             </button>
