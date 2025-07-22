@@ -54,13 +54,17 @@ export default function CatalogoPage() {
     <div className="min-h-screen bg-gray-100 px-4 py-6">
       {/* Logo + título centrados */}
       <div className="flex justify-between items-center mb-6 px-2">
-  <div className="flex items-center gap-3">
-    <img src="/FIRECAT.png" alt="Logo" className="h-10 w-auto rounded-md shadow-sm" />
-    <h1 className="text-2xl font-bold text-zinc-800">Catálogo</h1>
-  </div>
+        <div className="flex items-center gap-3">
+          <img
+            src="/FIRECAT.png"
+            alt="Logo"
+            className="h-10 w-auto rounded-md shadow-sm"
+          />
+          <h1 className="text-2xl font-bold text-zinc-800">Catálogo</h1>
+        </div>
 
-  <CerrarSesionButton />
-</div>
+        <CerrarSesionButton />
+      </div>
 
       <BuscadorPedidos />
 

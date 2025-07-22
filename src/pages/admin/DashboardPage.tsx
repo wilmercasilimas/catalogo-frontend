@@ -14,7 +14,7 @@ export default function DashboardPage() {
 
       {/* 🔥 Video realista fuera de la tarjeta */}
       <video
-        src="/videos/video de prueba.mp4"
+        src="/videos/bom.mp4"
         autoPlay
         loop
         muted
