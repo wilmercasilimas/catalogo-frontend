@@ -5,7 +5,7 @@ import { primaryButton } from "@/styles/buttons";
 
 interface Props {
   onClose: () => void;
-  onFinalizar: () => void; // ✅ Agregado
+  onFinalizar: () => void;
 }
 
 export default function CarritoDrawer({ onClose, onFinalizar }: Props) {
@@ -16,17 +16,20 @@ export default function CarritoDrawer({ onClose, onFinalizar }: Props) {
       {/* Fondo oscuro */}
       <div className="fixed inset-0 bg-black bg-opacity-30" onClick={onClose} />
 
-      {/* Drawer lateral */}
-      <div className="relative w-full max-w-sm bg-white shadow-lg h-full p-4 overflow-y-auto">
+      {/* Drawer lateral rojo más ancho */}
+      <div className="relative w-full max-w-md bg-white shadow-lg h-full p-6 overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-600 hover:text-black"
+          className="absolute top-4 right-4 text-gray-600 hover:text-black"
           title="Cerrar"
         >
-          <X size={22} />
+          <X size={26} />
         </button>
 
-        <h2 className="text-xl font-bold text-rojo mb-6 mt-1">🛒 Tu pedido</h2>
+        <h2 className="text-2xl font-bold text-rojo mb-6 mt-2 flex items-center gap-2">
+          <span className="text-4xl">🛒</span>
+          <span>Tu pedido</span>
+        </h2>
 
         {items.length === 0 ? (
           <p className="text-gray-500 text-sm">
@@ -43,18 +46,19 @@ export default function CarritoDrawer({ onClose, onFinalizar }: Props) {
                   <img
                     src={item.producto.imagen?.url || "/placeholder.jpg"}
                     alt={item.producto.nombre}
-                    className="w-16 h-16 object-cover rounded"
+                    className="w-20 h-20 object-cover rounded"
                   />
-                  <div className="flex-1 text-sm">
-                    <p className="font-semibold text-gray-800">
+                  <div className="flex-1 text-base">
+                    <p className="font-semibold text-zinc-900">
                       {item.producto.nombre}
                     </p>
-                    <p className="text-gray-600">
+                    <p className="text-zinc-700">
                       Variante:{" "}
                       <strong>{item.variante.modelo || "Sin modelo"}</strong>
                     </p>
-                    <p className="text-gray-600">
-                      Cantidad: <strong>{item.cantidad}</strong>
+                    <p className="text-zinc-700">
+                      Cantidad:{" "}
+                      <strong className="text-rojo">{item.cantidad}</strong>
                     </p>
                     <button
                       onClick={() => eliminarItem(index)}
@@ -67,7 +71,6 @@ export default function CarritoDrawer({ onClose, onFinalizar }: Props) {
               ))}
             </ul>
 
-            {/* ✅ Botón Finalizar funcional */}
             <button
               className={`${primaryButton} mt-6 w-full`}
               onClick={onFinalizar}
