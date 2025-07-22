@@ -116,12 +116,12 @@ export default function CatalogoPage() {
 
       <button
         onClick={() => setMostrarCarrito(true)}
-        className="fixed bottom-4 right-4 z-50 bg-rojo text-white rounded-full p-4 shadow-lg hover:bg-red-700 transition"
+        className="fixed bottom-4 right-4 z-50 bg-transparent border border-rojo rounded-full px-4 py-2 shadow-md hover:bg-red-100 transition flex items-center"
         aria-label="Ver carrito"
       >
-        🛒
+        <span className="text-rojo text-xl">🛒</span>
         {items.length > 0 && (
-          <span className="ml-2 font-bold text-sm text-black">
+          <span className="ml-2 font-bold text-sm text-black dark:text-white">
             {items.length}
           </span>
         )}
