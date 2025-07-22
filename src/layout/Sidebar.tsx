@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { Box, PackageCheck, Users, LogOut } from "lucide-react";
+import { Box, PackageCheck, Users } from "lucide-react";
+import CerrarSesionButton from "@/components/CerrarSesionButton";
 
 const links = [
   {
@@ -24,17 +25,18 @@ interface Props {
 }
 
 export default function Sidebar({ cerrar }: Props) {
-  const cerrarSesion = () => {
-    cerrar?.();
-    localStorage.removeItem("token");
-    window.location.href = "/login";
-  };
+  
 
   return (
     <aside className="w-60 min-h-screen bg-zinc-100 border-r flex flex-col text-gray-800">
-      <div className="px-4 py-5 text-left text-rojo font-bold text-lg border-b border-gray-300 uppercase tracking-wide">
-        Catálogo 🔥
-      </div>
+      <div className="flex justify-center items-center px-4 py-6 border-b border-gray-300">
+  <img
+    src="/FIRECAT.png"
+    alt="Logo Firecat"
+    className="h-20 w-auto"
+  />
+</div>
+
 
       <nav className="flex-1 px-4 py-6 space-y-2">
         {links.map(({ to, label, icon: Icon }) => (
@@ -56,13 +58,10 @@ export default function Sidebar({ cerrar }: Props) {
         ))}
       </nav>
 
-      <button
-        onClick={cerrarSesion}
-        className="flex items-center gap-2 text-sm text-red-700 hover:bg-red-100 px-4 py-3 border-t border-gray-300 uppercase font-semibold tracking-wide"
-      >
-        <LogOut className="w-4 h-4" />
-        Cerrar sesión
-      </button>
+      <div className="border-t border-gray-300 px-4 py-3">
+  <CerrarSesionButton />
+</div>
+
     </aside>
   );
 }

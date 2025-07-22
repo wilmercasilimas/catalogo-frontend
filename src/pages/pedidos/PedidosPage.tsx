@@ -14,6 +14,9 @@ interface PedidoBackend {
     empresa?: string;
   };
   items: {
+    producto?: {
+      nombre?: string;
+    };
     cantidad: number;
     variante?: {
       modelo?: string;
@@ -42,7 +45,10 @@ export default function PedidosPage() {
     codigo: p.codigo || "N/A",
     productos:
       p.items?.map((el) => ({
-        nombre: el.variante?.descripcion || "Producto sin descripción",
+        nombre: el.producto?.nombre || "Producto sin nombre",
+
+
+
         modelo: el.variante?.modelo || "N/A",
         cantidad: el.cantidad || 0,
       })) || [],

@@ -1,10 +1,11 @@
-// src/pages/catalogo/CatalogoPage.tsx
 import { useEffect, useState } from "react";
 import axios from "@/lib/axiosInstance";
 import AgregarProductoModal from "./components/AgregarProductoModal";
 import CarritoDrawer from "./components/CarritoDrawer";
 import FormularioClienteModal from "./components/FormularioClienteModal";
 import { useCarritoStore } from "@/store/useCarritoStore";
+import BuscadorPedidos from "./components/BuscadorPedidos";
+import CerrarSesionButton from "@/components/CerrarSesionButton";
 
 interface Variante {
   modelo?: string;
@@ -26,9 +27,11 @@ interface Producto {
 export default function CatalogoPage() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [cargando, setCargando] = useState(true);
-  const [productoSeleccionado, setProductoSeleccionado] = useState<Producto | null>(null);
+  const [productoSeleccionado, setProductoSeleccionado] =
+    useState<Producto | null>(null);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
-  const [mostrarFormularioCliente, setMostrarFormularioCliente] = useState(false); // ✅
+  const [mostrarFormularioCliente, setMostrarFormularioCliente] =
+    useState(false);
 
   const items = useCarritoStore((state) => state.items);
 
@@ -49,9 +52,17 @@ export default function CatalogoPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6">
-      <h1 className="text-2xl font-bold text-center text-zinc-800 mb-6">
-        Catálogo de Productos
-      </h1>
+      {/* Logo + título centrados */}
+      <div className="flex justify-between items-center mb-6 px-2">
+  <div className="flex items-center gap-3">
+    <img src="/public/FIRECAT.png" alt="Logo" className="h-10 w-auto rounded-md shadow-sm" />
+    <h1 className="text-2xl font-bold text-zinc-800">Catálogo</h1>
+  </div>
+
+  <CerrarSesionButton />
+</div>
+
+      <BuscadorPedidos />
 
       {cargando ? (
         <p className="text-center text-gray-500">Cargando productos...</p>
@@ -106,7 +117,9 @@ export default function CatalogoPage() {
       >
         🛒
         {items.length > 0 && (
-          <span className="ml-2 font-bold text-sm text-black">{items.length}</span>
+          <span className="ml-2 font-bold text-sm text-black">
+            {items.length}
+          </span>
         )}
       </button>
     </div>
