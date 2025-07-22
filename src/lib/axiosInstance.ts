@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://catalogo-backend-q5h2.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL, // ✅ usa la variable de entorno
 });
 
 instance.interceptors.request.use((config) => {
