@@ -46,8 +46,9 @@ export default function CarritoDrawer({ onClose, onFinalizar }: Props) {
                   <img
                     src={item.producto.imagen?.url || "/placeholder.jpg"}
                     alt={item.producto.nombre}
-                    className="w-20 h-20 object-cover rounded"
+                    className="w-20 aspect-square object-contain rounded"
                   />
+
                   <div className="flex-1 text-base">
                     <p className="font-semibold text-zinc-900">
                       {item.producto.nombre}
