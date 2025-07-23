@@ -91,8 +91,8 @@ export default function AgregarProductoModal({
                 onClick={() => setVarianteSeleccionada(v)}
                 className={`px-3 py-1 rounded border text-sm transition-colors ${
                   varianteSeleccionada === v
-                    ? "bg-black text-white border-gray-600 opacity-50 hover:opacity-100"
-                    : "bg-rojo text-black border-rojo"
+                    ? "bg-rojo text-black border-rojo dark:bg-red-600 dark:text-white"
+                    : "bg-black text-white border-gray-600 opacity-50 hover:opacity-100 dark:bg-zinc-800 dark:text-white"
                 }`}
               >
                 {v.modelo || "Sin modelo"}
