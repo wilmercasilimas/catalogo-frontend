@@ -60,7 +60,7 @@ export default function AgregarProductoModal({ abierto, cerrar, producto }: Prop
         <img
           src={producto.imagen?.url || "/placeholder.jpg"}
           alt={producto.nombre}
-          className="w-full h-40 object-cover rounded mb-3"
+          className="w-full aspect-[4/3] object-contain rounded mb-3"
         />
 
         <p className="font-semibold">{producto.nombre}</p>

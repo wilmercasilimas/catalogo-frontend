@@ -15,7 +15,6 @@ import {
   tableRow,
   tableCell,
   tdImg,
-  tdImgPreview,
   tdSinValor,
   tdVariantes,
   badgeModelo,
@@ -109,7 +108,7 @@ export default function ProductoTable({ productos, onEditar }: Props) {
                     <img
                       src={producto.imagen.secure_url}
                       alt={producto.nombre}
-                      className={tdImgPreview}
+                      className="w-20 aspect-square object-contain rounded"
                     />
                   ) : (
                     <span className={tdSinValor}>Sin imagen</span>
@@ -170,7 +169,7 @@ export default function ProductoTable({ productos, onEditar }: Props) {
                 <img
                   src={producto.imagen.secure_url}
                   alt={producto.nombre}
-                  className="w-16 h-16 object-cover rounded border"
+                  className="w-16 aspect-square object-contain rounded border"
                 />
               ) : (
                 <span className="text-gray-400 italic text-sm">Sin imagen</span>

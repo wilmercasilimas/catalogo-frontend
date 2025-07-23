@@ -71,7 +71,7 @@ export default function CatalogoPage() {
       {cargando ? (
         <p className="text-center text-gray-500">Cargando productos...</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
           {productos.map((producto) => (
             <div
               key={producto._id}
@@ -81,7 +81,7 @@ export default function CatalogoPage() {
               <img
                 src={producto.imagen?.url || "/placeholder.jpg"}
                 alt={producto.nombre}
-                className="w-full h-32 object-cover rounded mb-2"
+                className="w-full aspect-[4/3] object-contain rounded mb-2"
               />
               <p className="text-sm font-medium text-center text-gray-800">
                 {producto.nombre}
