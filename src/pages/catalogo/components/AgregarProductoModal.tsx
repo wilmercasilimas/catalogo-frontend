@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useCarritoStore } from "@/store/useCarritoStore";
-import { primaryButton, secondaryButton, disabledButton } from "@/styles/buttons";
+import {
+  primaryButton,
+  secondaryButton,
+  disabledButton,
+} from "@/styles/buttons";
 
 interface Variante {
   modelo?: string;
@@ -25,8 +29,13 @@ interface Props {
   producto: Producto | null;
 }
 
-export default function AgregarProductoModal({ abierto, cerrar, producto }: Props) {
-  const [varianteSeleccionada, setVarianteSeleccionada] = useState<Variante | null>(null);
+export default function AgregarProductoModal({
+  abierto,
+  cerrar,
+  producto,
+}: Props) {
+  const [varianteSeleccionada, setVarianteSeleccionada] =
+    useState<Variante | null>(null);
   const [cantidad, setCantidad] = useState("");
 
   const agregarItem = useCarritoStore((state) => state.agregarItem);
@@ -37,13 +46,18 @@ export default function AgregarProductoModal({ abierto, cerrar, producto }: Prop
     const cantidadNum = parseInt(cantidad);
     if (!varianteSeleccionada || isNaN(cantidadNum) || cantidadNum < 1) return;
 
-    agregarItem({ producto, variante: varianteSeleccionada, cantidad: cantidadNum });
+    agregarItem({
+      producto,
+      variante: varianteSeleccionada,
+      cantidad: cantidadNum,
+    });
     cerrar();
     setCantidad("");
     setVarianteSeleccionada(null);
   };
 
-  const deshabilitar = !varianteSeleccionada || !cantidad || parseInt(cantidad) < 1;
+  const deshabilitar =
+    !varianteSeleccionada || !cantidad || parseInt(cantidad) < 1;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
@@ -98,7 +112,7 @@ export default function AgregarProductoModal({ abierto, cerrar, producto }: Prop
           />
         </div>
 
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="flex justify-start gap-2 mt-4">
           <button onClick={cerrar} className={secondaryButton}>
             Cancelar
           </button>
@@ -107,7 +121,7 @@ export default function AgregarProductoModal({ abierto, cerrar, producto }: Prop
             disabled={deshabilitar}
             className={`${primaryButton} ${deshabilitar ? disabledButton : ""}`}
           >
-            Agregar al pedido
+            Agregar
           </button>
         </div>
       </div>
