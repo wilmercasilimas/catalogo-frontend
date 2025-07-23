@@ -83,16 +83,16 @@ export default function AgregarProductoModal({
         )}
 
         <div className="mb-3">
-          <p className="font-medium mb-1">Selecciona una variante:</p>
+          <p className="font-medium mb-1">Selecciona una medida:</p>
           <div className="flex flex-wrap gap-2">
             {producto.variantes?.map((v, i) => (
               <button
                 key={i}
                 onClick={() => setVarianteSeleccionada(v)}
-                className={`px-3 py-1 rounded border text-sm ${
+                className={`px-3 py-1 rounded border text-sm transition-colors ${
                   varianteSeleccionada === v
-                    ? "bg-rojo text-white"
-                    : "bg-white text-gray-800 border-gray-300"
+                    ? "bg-black text-white border-gray-600 opacity-50 hover:opacity-100"
+                    : "bg-rojo text-black border-rojo"
                 }`}
               >
                 {v.modelo || "Sin modelo"}
