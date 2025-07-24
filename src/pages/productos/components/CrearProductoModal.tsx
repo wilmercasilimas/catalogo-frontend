@@ -157,7 +157,8 @@ export default function CrearProductoModal({
                 </label>
                 <textarea
                   {...register("descripcion")}
-                  placeholder='Ej: "Codo metálico de 90° o 45°, roscado, ideal para desviar el flujo en instalaciones de agua, gas o aire a presión."'
+                  maxLength={550}
+                  placeholder='Ej: "Descripción del producto. Max. 550 caracteres."'
                   className={textareaInput}
                   rows={3}
                 ></textarea>
