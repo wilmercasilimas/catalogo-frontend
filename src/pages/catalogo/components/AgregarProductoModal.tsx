@@ -74,7 +74,7 @@ export default function AgregarProductoModal({
         <img
           src={producto.imagen?.url || "/placeholder.jpg"}
           alt={producto.nombre}
-          className="w-full aspect-[4/3] object-contain rounded mb-3"
+          className="w-full max-h-36 object-contain rounded mb-3"
         />
 
         <p className="font-semibold">{producto.nombre}</p>
