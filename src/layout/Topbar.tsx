@@ -21,7 +21,7 @@ export default function Topbar({ abrirSidebar }: Props) {
         <img
           src="/FIRECAT.png"
           alt="Logo Firecat"
-          className="h-14 w-auto"
+          className="h-16 w-auto"
         />
         <h1 className="text-lg font-bold tracking-wide uppercase">
           Catálogo

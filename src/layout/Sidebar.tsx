@@ -33,7 +33,7 @@ export default function Sidebar({ cerrar }: Props) {
   <img
     src="/FIRECAT.png"
     alt="Logo Firecat"
-    className="h-20 w-auto"
+    className="h-44 w-auto"
   />
 </div>
 

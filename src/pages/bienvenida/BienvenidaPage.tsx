@@ -10,7 +10,7 @@ export default function BienvenidaPage() {
         <img
           src="/FIRECAT.png"
           alt="Logo Firecat"
-          className="h-28 w-auto sm:h-32"
+          className="h-40 w-auto sm:h-80"
         />
 
         {/* 🟥 Título */}

@@ -58,7 +58,7 @@ export default function CatalogoPage() {
           <img
             src="/FIRECAT.png"
             alt="Logo"
-            className="h-10 w-auto rounded-md shadow-sm"
+            className="h-16 w-auto rounded-md shadow-sm"
           />
           <h1 className="text-2xl font-bold text-zinc-800">Catálogo</h1>
         </div>
